@@ -1,19 +1,49 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import CreateTask from  "../modals/CreateTask";
+import Card from './Card';
 
 const TodoList = () => {
     const [modal, setModal] = React.useState(false);
     const [taskList, setTaskList] = React.useState([])
 
+    useEffect(() => {
+        let arr = localStorage.getItem("taskList")
+
+        if(arr){
+            let obj = JSON.parse(arr)
+            setTaskList(obj)
+        }else{
+            setTaskList("add One")
+        }
+    }, [])
+
     const toggle = () =>{
         setModal(!modal);
+    }
+
+    const deleteTask = (index) =>{
+        let tempList = taskList
+        tempList.splice(index, 1)
+        localStorage.setItem("taskList", JSON.stringify(tempList))
+        setTaskList(tempList)
+        window.location.reload()
+    }
+
+    const updateListArray = (obj, index) =>{
+        let tempList = taskList
+        tempList[index] = obj
+        localStorage.setItem("taskList", JSON.stringify(tempList))
+        setTaskList(tempList)
+        window.location.reload()
     }
 
     const saveTask = (taskObj)=>{
         let tempList = taskList
         tempList.push(taskObj)
-        setTaskList(tempList)
+        localStorage.setItem("taskList", JSON.stringify(tempList))
         setModal(false)
+        setTaskList(tempList)
+        
     }
 
     return (
@@ -28,7 +58,13 @@ const TodoList = () => {
                 </button>
             </div>
             <div className='task-container'>
-                {taskList.map((obj) => <li>{obj.Name}</li>)}
+                {taskList.map((obj, index) => 
+                <Card taskObj={obj}
+                    index={index}
+                    deleteTask={deleteTask}
+                    updateListArray={updateListArray} 
+                />)}
+
             </div>
             <CreateTask toggle={toggle} modal={modal} save={saveTask} />
             
