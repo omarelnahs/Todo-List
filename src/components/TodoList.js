@@ -63,6 +63,7 @@ const TodoList = () => {
                     index={index}
                     deleteTask={deleteTask}
                     updateListArray={updateListArray} 
+                    key={index}
                 />)}
 
             </div>

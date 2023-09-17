@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import {Button, Modal, ModalHeader, ModalBody, ModalFooter} from 'reactstrap'
 
 const EditTask = ({modal, toggle, save, updateTask, taskObj}) => {
@@ -17,7 +17,8 @@ const EditTask = ({modal, toggle, save, updateTask, taskObj}) => {
 
     React.useEffect(() => {
         setTaskName(taskObj.Name)
-        setDesc(taskObj.desc)
+        setDesc(taskObj.Desc)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
     const handleUpdate = (e)=>{
@@ -43,7 +44,7 @@ const EditTask = ({modal, toggle, save, updateTask, taskObj}) => {
                             onChange={handleChange} 
                         />
                     </div>
-                    <div className='from-group'>
+                    <div className='form-group'>
                         <label>Description</label>
                         <textarea 
                             rows="5"
@@ -51,8 +52,7 @@ const EditTask = ({modal, toggle, save, updateTask, taskObj}) => {
                             value={desc}
                             name ="desc"
                             onChange={handleChange} 
-                        >
-                        </textarea>
+                        ></textarea>
                     </div>
                 </form>
             </ModalBody>
